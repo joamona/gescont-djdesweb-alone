@@ -3,7 +3,6 @@ import json
 from django.http import JsonResponse
 #from django.http import HttpResponse
 from django.views import View
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .pycode import buildingsPOO, connPOO
