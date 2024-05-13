@@ -1,3 +1,4 @@
+import json
 import random, time
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -18,9 +19,11 @@ def appLogin(request):
     time.sleep(seconds)
 
     #get the form data
+    d=general.getPostFormData(request)
+    username=d["username"]
+    password=d["password"]
+    print(username,password)
     
-    username=request.POST["username"]
-    password=request.POST["password"]
 
     #If user is not None, the credentials where correct
     user = authenticate(username=username, password=password)
