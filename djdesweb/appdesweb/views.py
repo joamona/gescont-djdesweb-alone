@@ -6,6 +6,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .pycode import buildingsPOO, connPOO
+from .pycode.libs import general
 #from django.contrib.auth import logout
 #from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
 #from django.views.decorators.csrf import csrf_exempt
@@ -49,8 +50,14 @@ class BuildingSelectByArea(View):
     
 class BuildingInsert(LoginRequiredMixin, View):
     def post(self, request):
-        descripcion=request.POST['descripcion']
-        geomWkt=request.POST['geomWkt']
+
+        #The following does not work with axios
+        #descripcion=request.POST['descripcion']
+        #geomWkt=request.POST['geomWkt']
+
+        d=general.getPostFormData(request)
+        descripcion=d['descripcion']
+        geomWkt=d['geomWkt']
         print(descripcion,geomWkt)
         conn=connPOO.Conn()
         b=buildingsPOO.Buildings(conn)
