@@ -15,7 +15,7 @@ class AppLogin(View):
         return JsonResponse(r)
     
 class AppLogout(View):
-    def get(self, request):
+    def post(self, request):
         if request.user.is_authenticated:
             username=request.user.username
             logout(request) #removes from the header of the request 
