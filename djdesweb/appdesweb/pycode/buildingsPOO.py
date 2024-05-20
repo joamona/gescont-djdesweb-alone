@@ -19,16 +19,21 @@ class Buildings():
     def insert(self,descripcion, geomWkt)->int:
         print('Iniciando')
         print(geomWkt)
-        r=checkIntersection('d.buildings',geomWkt,25830)
-        if r:
-            return {'ok':False,'message':'El edificio intersecta con otro','data':[]}
+        #r=checkIntersection('d.buildings',geomWkt,25830)
+        #if r:
+        #    return {'ok':False,'message':'El edificio intersecta con otro','data':[]}
 
         print('Despues del check')
-        q ="insert into d.buildings (descripcion,area, geom) values (%s,st_area(st_geometryfromtext(%s,25830)),st_geometryfromtext(%s,25830)) returning gid"
+        q ="insert into d.buildings (descripcion,area, geom) values (%s,st_area(st_geometryfromtext(%s,25830)),st_geometryfromtext(%s,25830)) returning gid, area"
         self.conn.cursor.execute(q,[descripcion,geomWkt, geomWkt])
         self.conn.conn.commit()
-        gid = self.conn.cursor.fetchall()[0][0]
-        return {'ok':True,'message':f'Edificio insertado. gid: {gid}','data':[[gid]]}
+        r=self.conn.cursor.fetchall()#something like this: [(2,236.6)].
+                #fetchall() emties the cursor. If you execute fetchall() twice you will get
+                #an empty list []
+        print("---",r)
+        gid = r[0][0]
+        area = r[0][1]
+        return {'ok':True,'message':f'Edificio insertado. gid: {gid}','data':[{"gid":gid, "area":area}]}
      
      
     def update(self,gid, descripcion, geomWkt)->int:
