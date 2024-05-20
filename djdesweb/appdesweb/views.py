@@ -27,6 +27,8 @@ class HolaClase(View):
 class BuildingSelectByGid(View):
     def get(self, request):
         gid=request.GET['gid']
+        if gid==None or gid=='':
+            return JsonResponse({"ok":False, "message": "No gid where provided", "data": []})
         conn=connPOO.Conn()
         b=buildingsPOO.Buildings(conn)
         r=b.selectAsDict(gid)
