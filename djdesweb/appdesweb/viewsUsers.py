@@ -16,6 +16,7 @@ class AppLogin(View):
     
 class AppLogout(View):
     def post(self, request):
+        print(request.user.username)
         if request.user.is_authenticated:
             username=request.user.username
             logout(request) #removes from the header of the request 
